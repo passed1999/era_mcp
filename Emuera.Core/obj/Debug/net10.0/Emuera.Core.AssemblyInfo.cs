@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Emuera.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdc5b0d59f7ff03ba5844ceb81fac0604403774d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71fbdb76e529a25b417fd7fcd1c66c0069430125")]
 [assembly: System.Reflection.AssemblyProductAttribute("Emuera.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Emuera.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

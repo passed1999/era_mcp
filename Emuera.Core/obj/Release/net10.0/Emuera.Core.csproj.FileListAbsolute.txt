@@ -1,0 +1,12 @@
+/home/island/emuera-analyzer/Emuera.Core/bin/Release/net10.0/Emuera.Core.deps.json
+/home/island/emuera-analyzer/Emuera.Core/bin/Release/net10.0/Emuera.Core.dll
+/home/island/emuera-analyzer/Emuera.Core/bin/Release/net10.0/Emuera.Core.pdb
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.csproj.AssemblyReference.cache
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.AssemblyInfoInputs.cache
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.AssemblyInfo.cs
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.csproj.CoreCompileInputs.cache
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.dll
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/refint/Emuera.Core.dll
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/Emuera.Core.pdb
+/home/island/emuera-analyzer/Emuera.Core/obj/Release/net10.0/ref/Emuera.Core.dll
