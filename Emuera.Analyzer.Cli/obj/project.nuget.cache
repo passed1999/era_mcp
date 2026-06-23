@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "WGBOmLbuJNI=",
+  "success": true,
+  "projectFilePath": "/home/island/emuera-analyzer/Emuera.Analyzer.Cli/Emuera.Analyzer.Cli.csproj",
+  "expectedPackageFiles": [
+    "/home/island/.nuget/packages/enums.net/4.0.2/enums.net.4.0.2.nupkg.sha512",
+    "/home/island/.nuget/packages/microsoft.win32.systemevents/9.0.0/microsoft.win32.systemevents.9.0.0.nupkg.sha512",
+    "/home/island/.nuget/packages/system.commandline/2.0.0-beta4.22272.1/system.commandline.2.0.0-beta4.22272.1.nupkg.sha512",
+    "/home/island/.nuget/packages/system.drawing.common/9.0.0/system.drawing.common.9.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
