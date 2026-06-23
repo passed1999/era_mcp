@@ -311,7 +311,7 @@ internal sealed class ConsoleButtonString
 				}
 				GlobalStatic.Console.bitmapCacheArray[index] = this;
 				index++;
-				if (index >= IConsoleOutput.bitmapCacheArrayCap) index = 0;
+				if (index >= 256/*EmueraConsole.bitmapCacheArrayCap*/) index = 0;
 				GlobalStatic.Console.bitmapCacheArrayIndex = index;
 
 			}

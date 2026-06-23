@@ -6,18 +6,44 @@
 namespace System.Windows.Forms
 {
 	internal enum DialogResult { None = 0, OK = 1, Cancel = 2, Yes = 6, No = 7 }
+	internal enum MessageBoxButtons { OK = 0, OKCancel = 1, YesNoCancel = 3, YesNo = 4 }
+	internal enum MessageBoxIcon { None = 0, Hand = 16, Question = 32, Exclamation = 48, Asterisk = 64, Error = 16, Warning = 48, Information = 64 }
+	internal enum MessageBoxDefaultButton { Button1 = 0, Button2 = 256, Button3 = 512 }
 
 	internal static class MessageBox
 	{
 		public static DialogResult Show(string text) => DialogResult.OK;
 		public static DialogResult Show(string text, string caption) => DialogResult.OK;
 		public static DialogResult Show(string text, string caption, object buttons) => DialogResult.OK;
+		public static DialogResult Show(string text, string caption, MessageBoxButtons buttons) => DialogResult.OK;
+		public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon) => DialogResult.OK;
+		public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton def) => DialogResult.OK;
 	}
 
 	internal static class Application
 	{
 		// WinForms 消息泵；无头环境下无意义，置空。
 		public static void DoEvents() { }
+		public static string ProductVersion => "0.0";
+	}
+
+	// 极小控件桩：仅满足执行期渲染/输入代码编译。
+	internal class Control
+	{
+		public static System.Drawing.Point MousePosition => System.Drawing.Point.Empty;
+		public int Width { get; set; }
+		public int Height { get; set; }
+	}
+
+	internal sealed class PictureBox : Control
+	{
+		public System.Drawing.Rectangle ClientRectangle => System.Drawing.Rectangle.Empty;
+		public System.Drawing.Point PointToClient(System.Drawing.Point p) => p;
+	}
+
+	internal sealed class RichTextBox : Control
+	{
+		public string Text { get; set; } = string.Empty;
 	}
 
 	internal static class Clipboard
@@ -41,6 +67,7 @@ namespace System.Windows.Forms
 		WordBreak = 1 << 6,
 		SingleLine = 1 << 7,
 		NoClipping = 1 << 8,
+		PreserveGraphicsClipping = 1 << 9,
 	}
 
 	// GDI 文本测量/绘制：仅在执行期渲染路径触达；分析路径不会调用。返回缺省值即可编译。
@@ -52,6 +79,8 @@ namespace System.Windows.Forms
 
 		public static void DrawText(System.Drawing.Graphics dc, System.ReadOnlySpan<char> text, System.Drawing.Font font, System.Drawing.Point pt, System.Drawing.Color foreColor, TextFormatFlags flags) { }
 		public static void DrawText(System.Drawing.Graphics dc, string text, System.Drawing.Font font, System.Drawing.Point pt, System.Drawing.Color foreColor, TextFormatFlags flags) { }
+		public static void DrawText(System.Drawing.Graphics dc, System.ReadOnlySpan<char> text, System.Drawing.Font font, System.Drawing.Point pt, System.Drawing.Color foreColor, System.Drawing.Color backColor, TextFormatFlags flags) { }
+		public static void DrawText(System.Drawing.Graphics dc, string text, System.Drawing.Font font, System.Drawing.Point pt, System.Drawing.Color foreColor, System.Drawing.Color backColor, TextFormatFlags flags) { }
 	}
 }
 

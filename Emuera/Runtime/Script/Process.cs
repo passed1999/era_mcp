@@ -10,6 +10,7 @@ using MinorShift.Emuera.Runtime.Script.Statements.Function;
 using MinorShift.Emuera.Runtime.Script.Statements.Variable;
 using MinorShift.Emuera.Runtime.Utils;
 using MinorShift.Emuera.Runtime.Utils.PluginSystem;
+using MinorShift.Emuera.UI;
 using MinorShift.Emuera.UI.Game.Image;
 using System;
 using System.Collections.Generic;
@@ -194,10 +195,14 @@ internal sealed partial class Process(IConsoleOutput view)
 			LexicalAnalyzer.UseMacro = false;
 
 			PluginManager.GetInstance().SetParent(this, state, exm);
-			PluginManager.GetInstance().LoadPlugins();
-			if (GlobalStatic.ExistPlugin == true && Config.PluginAvailableWarn == true)
+			// 语法分析模式下跳过插件 DLL 加载（无关解析，且无头环境不应有副作用）。
+			if (!Program.AnalysisMode)
 			{
-				console.PrintSingleLine(trsl.PluginAvailable.Text);
+				PluginManager.GetInstance().LoadPlugins();
+				if (GlobalStatic.ExistPlugin == true && Config.PluginAvailableWarn == true)
+				{
+					console.PrintSingleLine(trsl.PluginAvailable.Text);
+				}
 			}
 
 			//ERH読込
