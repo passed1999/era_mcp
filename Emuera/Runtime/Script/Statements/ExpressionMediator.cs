@@ -14,7 +14,7 @@ namespace MinorShift.Emuera.Runtime.Script.Statements;
 //変数が絡む仕事はVariableEvaluatorへ。
 internal sealed class ExpressionMediator
 {
-	public ExpressionMediator(Process proc, VariableEvaluator vev, EmueraConsole console)
+	public ExpressionMediator(Process proc, VariableEvaluator vev, IConsoleOutput console)
 	{
 		VEvaluator = vev;
 		Process = proc;
@@ -22,7 +22,7 @@ internal sealed class ExpressionMediator
 	}
 	public readonly VariableEvaluator VEvaluator;
 	public readonly Process Process;
-	public readonly EmueraConsole Console;
+	public readonly IConsoleOutput Console;
 
 
 

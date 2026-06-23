@@ -30,8 +30,8 @@ internal partial class ParserMediator
 		warningList.Add(new ParserWarning(str, pos, level, stack));
 	}
 
-	static EmueraConsole console;
-	public static void Initialize(EmueraConsole console)
+	static IConsoleOutput console;
+	public static void Initialize(IConsoleOutput console)
 	{
 		ParserMediator.console = console;
 	}

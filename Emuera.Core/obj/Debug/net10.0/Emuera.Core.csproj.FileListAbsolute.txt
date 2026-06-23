@@ -1,0 +1,5 @@
+/home/island/emuera-analyzer/Emuera.Core/obj/Debug/net10.0/Emuera.Core.csproj.AssemblyReference.cache
+/home/island/emuera-analyzer/Emuera.Core/obj/Debug/net10.0/Emuera.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/island/emuera-analyzer/Emuera.Core/obj/Debug/net10.0/Emuera.Core.AssemblyInfoInputs.cache
+/home/island/emuera-analyzer/Emuera.Core/obj/Debug/net10.0/Emuera.Core.AssemblyInfo.cs
+/home/island/emuera-analyzer/Emuera.Core/obj/Debug/net10.0/Emuera.Core.csproj.CoreCompileInputs.cache

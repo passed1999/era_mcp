@@ -121,7 +121,7 @@ internal sealed class ConstantData
 	public long[] ItemPrice;
 
 	private readonly List<CharacterTemplate> CharacterTmplList;
-	private EmueraConsole output;
+	private IConsoleOutput output;
 
 	public ConstantData()
 	{
@@ -620,7 +620,7 @@ internal sealed class ConstantData
 	}
 
 
-	public void LoadData(string csvDir, EmueraConsole console, bool disp)
+	public void LoadData(string csvDir, IConsoleOutput console, bool disp)
 	{
 		output = console;
 		loadVariableSizeData(Path.Combine(csvDir, "VariableSize.CSV"), disp);

@@ -24,7 +24,7 @@ internal static class GlobalStatic
 	//下から上を参照した場合、nullを返されることがある。
 	//Config Replace
 	//public static MainWindow MainWindow;
-	public static EmueraConsole Console;
+	public static IConsoleOutput Console;
 	public static Process Process;
 	//Config.RenameDic
 	public static GameBase GameBaseData;
@@ -45,7 +45,10 @@ internal static class GlobalStatic
 	public static bool ForceQuitAndRestart;//連続実行を防ぐ
 	#endregion
 	#region EE_フォントファイル対応
-	public static PrivateFontCollection Pfc = new();
+	// 延迟初始化：PrivateFontCollection 的构造在非 Windows 上会触发 GDI+ 异常，
+	// 而它仅在执行期（字体族枚举）用到，分析路径绝不触达。延迟可保证无头分析在 Linux 安全。
+	private static PrivateFontCollection _pfc;
+	public static PrivateFontCollection Pfc => _pfc ??= new();
 	#endregion
 
 	public static CtrlZ ctrlZ = new();

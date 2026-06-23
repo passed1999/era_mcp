@@ -15,14 +15,14 @@ namespace MinorShift.Emuera.Runtime.Script.Loader;
 
 internal sealed class ErhLoader
 {
-	public ErhLoader(EmueraConsole main, IdentifierDictionary idDic, Process proc)
+	public ErhLoader(IConsoleOutput main, IdentifierDictionary idDic, Process proc)
 	{
 		output = main;
 		parentProcess = proc;
 		this.idDic = idDic;
 	}
 	readonly Process parentProcess;
-	readonly EmueraConsole output;
+	readonly IConsoleOutput output;
 	readonly IdentifierDictionary idDic;
 
 	bool noError = true;

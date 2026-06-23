@@ -457,17 +457,17 @@ internal static class HtmlManager
 	/// <param name="sm"></param>
 	/// <param name="console">実際の表示に使わないならnullにする</param>
 	/// <returns></returns>
-	public static ConsoleDisplayLine[] Html2DisplayLine(string str, StringMeasure sm, EmueraConsole console)
+	public static ConsoleDisplayLine[] Html2DisplayLine(string str, StringMeasure sm, IConsoleOutput console)
 	{
 		return html2DisplayLine(str, sm, console, null, null);
 	}
-	public static ConsoleButtonString[] Html2ButtonList(string str, StringMeasure sm, EmueraConsole console)
+	public static ConsoleButtonString[] Html2ButtonList(string str, StringMeasure sm, IConsoleOutput console)
 	{
 		var parts = new List<ConsoleButtonString>();
 		html2DisplayLine(str, sm, console, null, parts);
 		return parts.ToArray();
 	}
-	static ConsoleDisplayLine[] html2DisplayLine(string str, StringMeasure sm, EmueraConsole console, HtmlParentInfo parent, List<ConsoleButtonString> buttonsOutput)
+	static ConsoleDisplayLine[] html2DisplayLine(string str, StringMeasure sm, IConsoleOutput console, HtmlParentInfo parent, List<ConsoleButtonString> buttonsOutput)
 	#endregion
 	{
 		#region EM_私家版_HTML_PRINT拡張
@@ -760,7 +760,7 @@ internal static class HtmlManager
 	/// <param name="state"></param>
 	/// <param name="console"></param>
 	/// <returns></returns>
-	private static ConsoleButtonString cssToButton(List<AConsoleDisplayNode> cssList, HtmlAnalzeState state, EmueraConsole console)
+	private static ConsoleButtonString cssToButton(List<AConsoleDisplayNode> cssList, HtmlAnalzeState state, IConsoleOutput console)
 	{
 		AConsoleDisplayNode[] css = new AConsoleDisplayNode[cssList.Count];
 		cssList.CopyTo(css);

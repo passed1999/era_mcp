@@ -1549,7 +1549,7 @@ internal sealed class VariableEvaluator : IDisposable
 	//PREVCOMは更新されない。スクリプトの方で更新する必要がある。
 	//Data側からEmueraConsoleを操作するのはここだけ。
 	//1756 ↑だったのは今は昔の話である
-	public void UpdateInUpcheck(EmueraConsole window, bool skipPrint)
+	public void UpdateInUpcheck(IConsoleOutput window, bool skipPrint)
 	{
 		long[] up, down, param;
 		string[] paramname = constant.GetCsvNameList(VariableCode.PALAMNAME);
@@ -1605,7 +1605,7 @@ internal sealed class VariableEvaluator : IDisposable
 			down[i] = 0;
 	}
 
-	public void CUpdateInUpcheck(EmueraConsole window, long target, bool skipPrint)
+	public void CUpdateInUpcheck(IConsoleOutput window, long target, bool skipPrint)
 	{
 		long[] up, down, param;
 		string[] paramname = constant.GetCsvNameList(VariableCode.PALAMNAME);

@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MinorShift.Emuera</RootNamespace>
+    <AssemblyName>Emuera.Core</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- Core is the headless analysis assembly: no WinForms, no -windows TFM. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Headless analysis core compiles the engine's Runtime layer in place
+         from the sibling Emuera (App) project, plus Core-local shims/headless. -->
+    <Compile Include="..\Emuera\GlobalStatic.cs" Link="Engine\GlobalStatic.cs" />
+    <Compile Include="..\Emuera\Runtime\**\*.cs" LinkBase="Engine\Runtime" />
+    <!-- View-model / image files that are NOT WinForms-bound: included so the engine's
+         built-in graphics/print/sound command registry compiles. Their bodies use
+         System.Drawing (satisfied by System.Drawing.Common) but never run during analysis. -->
+    <Compile Include="..\Emuera\UI\Game\**\*.cs" LinkBase="Engine\View" />
+    <Compile Include="..\Emuera\UI\FontFactory.cs" Link="Engine\View\FontFactory.cs" />
+    <!-- Local Core-only sources (interface, headless console, shims, analyzer). -->
+    <Compile Include="_core\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Platform/native/UI-entangled engine files excluded from the headless core. -->
+    <Compile Remove="..\Emuera\Runtime\Utils\Sound.WMP.cs" />
+    <Compile Remove="..\Emuera\Runtime\Utils\Sound.NAudio.cs" />
+    <Compile Remove="..\Emuera\Runtime\Utils\NAudio_LoopStream.cs" />
+    <!-- Only the real WinForms console form is excluded (replaced by HeadlessConsole).
+         The rest of UI/Game (view-model, image, parts, measurement) compiles headless
+         against System.Drawing.Common + the WinForms shim (TextRenderer/MessageBox). -->
+    <Compile Remove="..\Emuera\UI\Game\EmueraConsole.cs" />
+    <Compile Remove="..\Emuera\UI\Game\EmueraConsole.Print.cs" />
+    <Compile Remove="..\Emuera\UI\Game\HotkeyState.cs" />
+    <!-- Clipboard processor depends on Forms.MainWindow and is only used by the form. -->
+    <Compile Remove="..\Emuera\Runtime\Script\Statements\Clipboard.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Enums.NET" Version="4.0.2" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

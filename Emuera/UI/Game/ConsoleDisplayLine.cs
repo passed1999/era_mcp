@@ -12,19 +12,14 @@ internal enum DisplayLineLastState
 	BackLog = 3,
 }
 
-internal enum DisplayLineAlignment
-{
-	LEFT = 0,
-	CENTER = 1,
-	RIGHT = 2,
-}
+// DisplayLineAlignment 已迁至 Emuera.Core/_core/DisplayLineAlignment.cs（跨平台核心引用它）。
 /// <summary>
 /// 表示行。1つ以上のボタン（ConsoleButtonString）からなる
 /// </summary>
 internal sealed class ConsoleDisplayLine
 {
 
-	//public ConsoleDisplayLine(EmueraConsole parentWindow, ConsoleButtonString[] buttons, bool isLogical, bool temporary)
+	//public ConsoleDisplayLine(IConsoleOutput parentWindow, ConsoleButtonString[] buttons, bool isLogical, bool temporary)
 	public ConsoleDisplayLine(ConsoleButtonString[] buttons, bool isLogical, bool temporary, bool lineEnd = true)
 	{
 		//parent = parentWindow;
@@ -47,7 +42,7 @@ internal sealed class ConsoleDisplayLine
 	readonly public bool IsLogicalLine = true;
 	readonly public bool IsTemporary;
 	public bool IsLineEnd = true;
-	//EmueraConsole parent;
+	//IConsoleOutput parent;
 	ConsoleButtonString[] buttons;
 	DisplayLineAlignment align;
 	public ConsoleButtonString[] Buttons { get { return buttons; } }

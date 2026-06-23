@@ -1,4 +1,4 @@
-﻿using MinorShift.Emuera.Forms;
+﻿// using MinorShift.Emuera.Forms; // 未使用；移除以便无头核心（无 App.Forms 命名空间）编译
 using MinorShift.Emuera.Runtime.Config;
 using MinorShift.Emuera.UI.Game;
 using System;

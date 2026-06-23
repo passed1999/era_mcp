@@ -71,7 +71,7 @@ internal enum ConsoleRedraw
 	Normal = 1,
 }
 
-internal sealed partial class EmueraConsole : IDisposable
+internal sealed partial class EmueraConsole : IDisposable, IConsoleOutput
 {
 	#region EmuEra-Rikaichan
 	public Rikaichan rikaichan = new();

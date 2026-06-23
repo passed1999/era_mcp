@@ -21,11 +21,11 @@ namespace MinorShift.Emuera.UI.Game;
 /// </summary>
 internal sealed class PrintStringBuffer
 {
-	public PrintStringBuffer(EmueraConsole parent)
+	public PrintStringBuffer(IConsoleOutput parent)
 	{
 		this.parent = parent;
 	}
-	readonly EmueraConsole parent;
+	readonly IConsoleOutput parent;
 	readonly StringBuilder builder = new(2000);
 	List<AConsoleDisplayNode> m_stringList = [];
 	StringStyle lastStringStyle;

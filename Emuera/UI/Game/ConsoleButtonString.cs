@@ -26,7 +26,7 @@ internal sealed class ConsoleButtonString
 			}
 		}
 	}
-	public ConsoleButtonString(EmueraConsole console, AConsoleDisplayNode[] strs)
+	public ConsoleButtonString(IConsoleOutput console, AConsoleDisplayNode[] strs)
 	{
 		parent = console;
 		strArray = strs;
@@ -35,7 +35,7 @@ internal sealed class ConsoleButtonString
 		Width = -1;
 		ErrPos = null;
 	}
-	public ConsoleButtonString(EmueraConsole console, AConsoleDisplayNode[] strs, long input)
+	public ConsoleButtonString(IConsoleOutput console, AConsoleDisplayNode[] strs, long input)
 		: this(console, strs)
 	{
 		Input = input;
@@ -50,7 +50,7 @@ internal sealed class ConsoleButtonString
 		}
 		ErrPos = null;
 	}
-	public ConsoleButtonString(EmueraConsole console, AConsoleDisplayNode[] strs, string inputs)
+	public ConsoleButtonString(IConsoleOutput console, AConsoleDisplayNode[] strs, string inputs)
 		: this(console, strs)
 	{
 		Inputs = inputs;
@@ -65,7 +65,7 @@ internal sealed class ConsoleButtonString
 		ErrPos = null;
 	}
 
-	public ConsoleButtonString(EmueraConsole console, AConsoleDisplayNode[] strs, long input, string inputs)
+	public ConsoleButtonString(IConsoleOutput console, AConsoleDisplayNode[] strs, long input, string inputs)
 		: this(console, strs)
 	{
 		Input = input;
@@ -80,7 +80,7 @@ internal sealed class ConsoleButtonString
 		}
 		ErrPos = null;
 	}
-	public ConsoleButtonString(EmueraConsole console, AConsoleDisplayNode[] strs, string inputs, ScriptPosition? pos)
+	public ConsoleButtonString(IConsoleOutput console, AConsoleDisplayNode[] strs, string inputs, ScriptPosition? pos)
 		: this(console, strs)
 	{
 		Inputs = inputs;
@@ -114,7 +114,7 @@ internal sealed class ConsoleButtonString
 
 	AConsoleDisplayNode[] strArray;
 	public AConsoleDisplayNode[] StrArray { get { return strArray; } }
-	EmueraConsole parent;
+	IConsoleOutput parent;
 
 	public ConsoleDisplayLine ParentLine { get; set; }
 	public bool IsButton { get; private set; }
@@ -311,7 +311,7 @@ internal sealed class ConsoleButtonString
 				}
 				GlobalStatic.Console.bitmapCacheArray[index] = this;
 				index++;
-				if (index >= EmueraConsole.bitmapCacheArrayCap) index = 0;
+				if (index >= IConsoleOutput.bitmapCacheArrayCap) index = 0;
 				GlobalStatic.Console.bitmapCacheArrayIndex = index;
 
 			}

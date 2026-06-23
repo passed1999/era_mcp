@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "/cWAtgVgc9E=",
+  "success": true,
+  "projectFilePath": "/home/island/emuera-analyzer/Emuera.Core/Emuera.Core.csproj",
+  "expectedPackageFiles": [
+    "/home/island/.nuget/packages/enums.net/4.0.2/enums.net.4.0.2.nupkg.sha512",
+    "/home/island/.nuget/packages/microsoft.win32.systemevents/9.0.0/microsoft.win32.systemevents.9.0.0.nupkg.sha512",
+    "/home/island/.nuget/packages/system.commandline/2.0.0-beta4.22272.1/system.commandline.2.0.0-beta4.22272.1.nupkg.sha512",
+    "/home/island/.nuget/packages/system.drawing.common/9.0.0/system.drawing.common.9.0.0.nupkg.sha512",
+    "/home/island/.nuget/packages/system.text.encoding.codepages/9.0.0/system.text.encoding.codepages.9.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference System.Text.Encoding.CodePages will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "/home/island/emuera-analyzer/Emuera.Core/Emuera.Core.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/island/emuera-analyzer/Emuera.Core/Emuera.Core.csproj",
+      "libraryId": "System.Text.Encoding.CodePages",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

@@ -275,14 +275,14 @@ internal static class LogicalLineParser
 		return true;
 	}
 
-	public static LogicalLine ParseLine(string str, EmueraConsole console)
+	public static LogicalLine ParseLine(string str, IConsoleOutput console)
 	{
 		ScriptPosition? position = new();
 		CharStream stream = new(str);
 		return ParseLine(stream, position, console);
 	}
 
-	public static LogicalLine ParseLabelLine(CharStream stream, ScriptPosition? position, EmueraConsole console)
+	public static LogicalLine ParseLabelLine(CharStream stream, ScriptPosition? position, IConsoleOutput console)
 	{
 		bool isFunction = stream.Current == '@';
 		//int lineNo = Position.Value.LineNo;
@@ -380,7 +380,7 @@ internal static class LogicalLineParser
 	}
 
 
-	public static LogicalLine ParseLine(CharStream stream, ScriptPosition? position, EmueraConsole console, FunctionLabelLine parentLine = null)
+	public static LogicalLine ParseLine(CharStream stream, ScriptPosition? position, IConsoleOutput console, FunctionLabelLine parentLine = null)
 	{
 		//int lineNo = Position.Value.LineNo;
 		string errMes;

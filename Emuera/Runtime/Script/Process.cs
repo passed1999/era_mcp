@@ -23,7 +23,7 @@ using trsl = MinorShift.Emuera.Runtime.Utils.EvilMask.Lang.SystemLine;
 
 namespace MinorShift.Emuera.GameProc;
 
-internal sealed partial class Process(EmueraConsole view)
+internal sealed partial class Process(IConsoleOutput view)
 {
 	public LogicalLine getCurrentLine { get { return state.CurrentLine; } }
 
@@ -42,7 +42,7 @@ internal sealed partial class Process(EmueraConsole view)
 	private ExpressionMediator exm;
 	private GameBase gamebase;
 	public GameBase gameBase { get { return gamebase; } }
-	readonly EmueraConsole console = view;
+	readonly IConsoleOutput console = view;
 	private IdentifierDictionary idDic;
 	ProcessState state;
 	ProcessState originalState;//リセットする時のために

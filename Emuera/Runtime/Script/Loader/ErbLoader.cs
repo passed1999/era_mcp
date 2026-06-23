@@ -21,7 +21,7 @@ namespace MinorShift.Emuera.Runtime.Script.Loader;
 
 internal sealed class ErbLoader
 {
-	public ErbLoader(EmueraConsole main, ExpressionMediator exm, Process proc)
+	public ErbLoader(IConsoleOutput main, ExpressionMediator exm, Process proc)
 	{
 		output = main;
 		parentProcess = proc;
@@ -29,7 +29,7 @@ internal sealed class ErbLoader
 	}
 	readonly Process parentProcess;
 	readonly ExpressionMediator exm;
-	readonly EmueraConsole output;
+	readonly IConsoleOutput output;
 	readonly HashSet<string> ignoredFNFWarningFiles = new(StringComparer.OrdinalIgnoreCase);
 	int ignoredFNFWarningCount;
 

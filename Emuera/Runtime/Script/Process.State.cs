@@ -91,12 +91,12 @@ internal enum BeginType
 
 internal sealed class ProcessState
 {
-	public ProcessState(EmueraConsole console)
+	public ProcessState(IConsoleOutput console)
 	{
 		if (Program.DebugMode)//DebugModeでなければ知らなくて良い
 			this.console = console;
 	}
-	readonly EmueraConsole console;
+	readonly IConsoleOutput console;
 	readonly List<CalledFunction> functionList = [];
 	private LogicalLine currentLine;
 	//private LogicalLine nextLine;
