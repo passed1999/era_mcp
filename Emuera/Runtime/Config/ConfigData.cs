@@ -690,20 +690,23 @@ internal sealed class ConfigData
 
 	public bool LoadConfig()
 	{
-		string defaultConfigPath = Program.CsvDir + "_default.config";
-		string fixedConfigPath = Program.CsvDir + "_fixed.config";
+		string defaultConfigPath = CaseInsensitivePath.Resolve(Program.CsvDir + "_default.config");
+		string fixedConfigPath = CaseInsensitivePath.Resolve(Program.CsvDir + "_fixed.config");
 		if (!File.Exists(defaultConfigPath))
-			defaultConfigPath = Program.CsvDir + "default.config";
+			defaultConfigPath = CaseInsensitivePath.Resolve(Program.CsvDir + "default.config");
 		if (!File.Exists(fixedConfigPath))
-			fixedConfigPath = Program.CsvDir + "fixed.config";
+			fixedConfigPath = CaseInsensitivePath.Resolve(Program.CsvDir + "fixed.config");
 
 		loadConfig(defaultConfigPath, false);
 		loadConfig(configPath, false);
 		loadConfig(fixedConfigPath, true);
 
 		Config.SetConfig(this);
+		// 解析モードでは利用者のプロジェクトへ emuera.config を書き出さない(副作用禁止)。
+		if (Program.AnalysisMode)
+			return true;
 		bool needSave = false;
-		if (!File.Exists(configPath))
+		if (!File.Exists(CaseInsensitivePath.Resolve(configPath)))
 			needSave = true;
 		if (Config.CheckUpdate())
 		{
@@ -717,6 +720,7 @@ internal sealed class ConfigData
 
 	private bool loadConfig(string confPath, bool fix)
 	{
+		confPath = CaseInsensitivePath.Resolve(confPath);
 		if (!File.Exists(confPath))
 			return false;
 		using var eReader = new EraStreamReader(false);

@@ -41,6 +41,7 @@ internal partial class ParserMediator
 	//1756 Process.Load.csより移動
 	public static void LoadEraExRenameFile(string filepath)
 	{
+		filepath = CaseInsensitivePath.Resolve(filepath);
 		if (!File.Exists(filepath))
 		{
 			return;

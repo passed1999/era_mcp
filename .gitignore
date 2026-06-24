@@ -2,12 +2,15 @@
 .vscode/*
 .idea/*
 
-Emuera/artifacts/*
-Emuera/Emuera.csproj.user
-Emuera/Properties/PublishProfiles/*.pubxml.user
-Emuera/Properties/launchSettings.json
-Emuera/bin/*
-Emuera/obj/*
+# Build output (all projects)
+[Bb]in/
+[Oo]bj/
+artifacts/
+
+# User-specific / generated project files
+*.csproj.user
+*.pubxml.user
+**/Properties/launchSettings.json
 
 *.diff
 *.patch

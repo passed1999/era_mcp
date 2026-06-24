@@ -218,6 +218,7 @@ internal sealed class ConstantData
 
 	private void loadVariableSizeData(string csvPath, bool disp)
 	{
+		csvPath = CaseInsensitivePath.Resolve(csvPath);
 		if (!File.Exists(csvPath))
 			return;
 		using var eReader = new EraStreamReader(false);
@@ -1286,7 +1287,7 @@ internal sealed class ConstantData
 		SaveMaps.Clear();
 		StaticMaps.Clear();
 		StaticXmls.Clear();
-		foreach (var path in Directory.GetFiles(csvPath, "VarExt*.csv", SearchOption.AllDirectories))
+		foreach (var path in CaseInsensitivePath.GetFiles(csvPath, "VarExt*.csv", SearchOption.AllDirectories))
 		{
 			using var eReader = new EraStreamReader(false);
 			if (!eReader.Open(path))
@@ -1685,7 +1686,7 @@ internal sealed class ConstantData
 
 	private void loadDataTo(string csvPath, int targetIndex, long[] targetI, bool disp)
 	{
-
+		csvPath = CaseInsensitivePath.Resolve(csvPath);
 		if (!File.Exists(csvPath))
 			return;
 		string[] target = names[targetIndex];
@@ -1766,7 +1767,7 @@ internal sealed class ConstantData
 			eReader.Close();
 		}
 
-		var aliasPath = Path.GetDirectoryName(csvPath) + "\\" + Path.GetFileNameWithoutExtension(csvPath) + ".als";
+		var aliasPath = CaseInsensitivePath.Resolve(Path.Combine(Path.GetDirectoryName(csvPath), Path.GetFileNameWithoutExtension(csvPath) + ".als"));
 		if (File.Exists(aliasPath))
 		{
 			loadAliases(aliasPath, targetIndex);
@@ -1775,7 +1776,7 @@ internal sealed class ConstantData
 
 	private void loadAliases(string aliasPath, int targetIndex)
 	{
-
+		aliasPath = CaseInsensitivePath.Resolve(aliasPath);
 		if (!File.Exists(aliasPath))
 			return;
 		if (aliases[targetIndex] == null)

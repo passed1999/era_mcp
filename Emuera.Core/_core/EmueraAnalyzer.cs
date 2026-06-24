@@ -48,6 +48,9 @@ public static class EmueraAnalyzer
 			ResetStatics();
 
 			Program.SetDirPaths(projectRoot);
+			// 大小写敏感FS(Linux)では csv/erb サブディレクトリ自体が CSV/ERB の可能性があるので解決する
+			Program.CsvDir = CaseInsensitivePath.Resolve(Program.CsvDir);
+			Program.ErbDir = CaseInsensitivePath.Resolve(Program.ErbDir);
 			if (!Directory.Exists(Program.CsvDir))
 				return Failure(projectRoot, target, sw, $"csv 目录不存在: {Program.CsvDir}");
 			if (!Directory.Exists(Program.ErbDir))
@@ -119,7 +122,7 @@ public static class EmueraAnalyzer
 
 	private static List<string> ResolveTargets(string target)
 	{
-		string root = string.IsNullOrWhiteSpace(target) ? Program.ErbDir : target;
+		string root = string.IsNullOrWhiteSpace(target) ? Program.ErbDir : CaseInsensitivePath.Resolve(target);
 		if (File.Exists(root))
 			return new List<string> { Path.GetFullPath(root) };
 		if (Directory.Exists(root))
