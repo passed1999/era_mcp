@@ -52,3 +52,41 @@
 
 ### Web research (no guessing)
 - If something is unfamiliar or version-sensitive, search first (priority: official docs → changelog → upstream repo docs → community).
+
+---
+
+## 项目：无头 era 语法分析核心 + MCP 服务器
+
+> 本仓是 `emuera.em` 的独立副本（全新 git），用于在 Emuera 之上做**跨平台无头语法分析**与 **C# MCP 服务器**。原 `emuera.em` 不在此修改。
+
+### 工程结构（同一目录下多项目，无 .sln，逐项目 build）
+| 项目 | TFM | 作用 |
+|---|---|---|
+| `Emuera` | `net10.0-windows` | 原 WinForms 程序，**仅 Windows 可构建/运行**；本仓仅做与解耦兼容的小改 |
+| `Emuera.Core` | `net10.0` | **无头分析核心**，复用引擎全部加载/解析/语句/变量层 + 视图模型/图像，无 WinForms，跨平台 |
+| `Emuera.Analyzer.Cli` | `net10.0` | 命令行冒烟测试 `era-analyze <root> [target]` |
+| `Emuera.Mcp` | `net10.0` | MCP stdio 服务器，工具 `analyze_era_project`（ModelContextProtocol 1.4.0） |
+
+### 架构铁律（改动前必读，违反会静默出错）
+1. **诊断采集点在 `HeadlessConsole.PrintWarning`**：`ParserMediator.FlushWarningList()` 在加载/解析管线中被调用约 14 次，每次都会清空内部 `warningList`。**严禁**事后读 `warningList`，必须在 `console.PrintWarning` 推送点采集。
+2. **静态单例必须复位**：引擎重度依赖 `Program.*` / `GlobalStatic` / `ParserMediator` / `Config` 静态状态。`EmueraAnalyzer.AnalyzeProject` 已用全局锁串行化并每次 `ResetStatics()`。MCP 长驻进程多次调用靠此隔离——新增静态状态时务必纳入复位。
+3. **只解析、不执行**：分析只跑 `Process.Initialize()`（ERH+ERB 加载+解析+标签/参数/跳转解析），**绝不**调用 `DoScript()`。执行层（指令体/图形/声音/窗口）只需"能编译"，故由 `_core/` 下的 WinForms 垫片与视图桩满足；分析路径永不触达。
+4. **Core 与 App 是两套独立程序集、共享 `Runtime` 源码**：App **不**引用 Core（避免类型重复）。给引擎加东西若涉及 console，需同步更新 `IConsoleOutput` + `HeadlessConsole`（App 侧 `EmueraConsole` 已实现全部成员）。
+5. **单文件检查仍需项目根**：跨文件语义（未定义变量/函数/宏、参数个数）依赖项目的 ERH/CSV，故 `target` 为单文件时仍以 `projectRoot` 加载上下文。
+
+### 关键文件
+- 解耦/无头：`Emuera.Core/_core/`（`IConsoleOutput.cs`、`HeadlessConsole.cs`、`WinFormsShim.cs`、`ViewStubs.cs`、`Program.Core.cs`、`SoundStub.cs`、`DisplayLineAlignment.cs`）
+- 入口：`Emuera.Core/_core/EmueraAnalyzer.cs`（`AnalyzeProject`）、`Diagnostic.cs`、`AnalysisResult.cs`
+- MCP：`Emuera.Mcp/Program.cs`、`EraAnalysisTools.cs`（日志走 **stderr**，stdout 仅 JSON-RPC）
+- 测试夹具：`testgame/`（`csv/GAMEBASE.CSV` + `erb/test.ERB` 正常 + `erb/bad.ERB` 缺 ENDIF）
+- 文档：`README.analyzer.md`
+
+### 环境与构建
+- .NET 10 SDK 在 `~/.dotnet`；命令前 `export PATH="$HOME/.dotnet:$PATH"`。**App（net10.0-windows）在 Linux 无法构建**（无 Windows Desktop 运行时），只构建 `Emuera.Core` / `Emuera.Mcp` / `Emuera.Analyzer.Cli`。
+- 跑分析：`dotnet run --project Emuera.Analyzer.Cli -- ./testgame`
+- 跑 MCP：`dotnet Emuera.Mcp/bin/Release/net10.0/era-mcp.dll`（stdio）
+- 诊断 `level`：0 提示 / 1 信息 / 2 警告 / 3 致命。
+
+### 现状 / TODO
+- 四个阶段均已完成并端到端验证（CLI 与 MCP 均能在正确 file:line 报出缺 ENDIF 等错误）。
+- 待办：App 尚未改为引用 Core（Windows 上仍是独立单体）；可按需增加检测规则、缓存（按 csv/erh/config 时间戳）、更多测试夹具。
