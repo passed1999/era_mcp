@@ -2407,26 +2407,31 @@ internal static partial class FunctionMethodCreator
 		public override long GetIntValue(ExpressionMediator exm, List<AExpression> arguments)
 		{
 			string str = arguments[0].GetStrValue(exm);
-			using System.Drawing.Text.InstalledFontCollection ifc = new();
 			long isInstalled = 0;
-			foreach (FontFamily ff in ifc.Families)
+			// System.Drawingのフォント列挙はWindows(GDI+)専用。CHKFONTはCanRestructure=trueのため
+			// 定数引数だと解析時に畳み込まれて実行される。非Windowsでは確認不能なので未インストール扱い。
+			if (OperatingSystem.IsWindows())
 			{
-				#region EE_フォントファイル対応
-				if (ff.Name == str)
+				using System.Drawing.Text.InstalledFontCollection ifc = new();
+				foreach (FontFamily ff in ifc.Families)
 				{
-					isInstalled = 1;
-					break;
+					#region EE_フォントファイル対応
+					if (ff.Name == str)
+					{
+						isInstalled = 1;
+						break;
+					}
 				}
-			}
-			foreach (FontFamily ff in GlobalStatic.Pfc.Families)
-			{
-				if (ff.Name == str)
+				foreach (FontFamily ff in GlobalStatic.Pfc.Families)
 				{
-					isInstalled = 1;
-					break;
+					if (ff.Name == str)
+					{
+						isInstalled = 1;
+						break;
+					}
 				}
+				#endregion
 			}
-			#endregion
 			return (isInstalled);
 		}
 
