@@ -1,0 +1,75 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag (e.g. v0.1.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Resolve version
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish & package (self-contained single-file)
+        run: |
+          set -euo pipefail
+          VER="${{ steps.ver.outputs.tag }}"
+          mkdir -p dist
+
+          publish() {
+            rid="$1"; proj="$2"
+            dotnet publish "$proj" -c Release -r "$rid" \
+              --self-contained true \
+              -p:PublishSingleFile=true \
+              -p:IncludeNativeLibrariesForSelfExtract=true \
+              -p:DebugType=none -p:DebugSymbols=false \
+              -o "out/$rid"
+          }
+
+          for rid in linux-x64 win-x64; do
+            rm -rf "out/$rid"
+            publish "$rid" Emuera.Mcp/Emuera.Mcp.csproj
+            publish "$rid" Emuera.Analyzer.Cli/Emuera.Analyzer.Cli.csproj
+            cp DEPLOY.md README.analyzer.md "out/$rid"/ 2>/dev/null || true
+            if [ "$rid" = "win-x64" ]; then
+              (cd "out/$rid" && zip -r "../../dist/era-tools-${VER}-${rid}.zip" .)
+            else
+              tar -C "out/$rid" -czf "dist/era-tools-${VER}-${rid}.tar.gz" .
+            fi
+          done
+
+          ls -la dist
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VER="${{ steps.ver.outputs.tag }}"
+          gh release create "$VER" dist/* \
+            --title "$VER" \
+            --target "${{ github.sha }}" \
+            --generate-notes \
+            --notes $'era 语法分析器 / MCP 服务器 — 自包含单文件发布。\n\n包含 `era-mcp`(MCP stdio 服务器) 与 `era-analyze`(CLI)，linux-x64 与 win-x64，**目标机无需安装 .NET** 即可运行。\n\n用法见包内 DEPLOY.md。'
