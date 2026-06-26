@@ -1,6 +1,6 @@
 # era_mcp
 
-从 [Emuera](https://ja.osdn.net/projects/emuera/)（era 解释器，WinForms）抽取出的**跨平台无头 era 语法分析核心**，外加一个**纯 C# 的 MCP 服务器**。
+从 [EvilMask/emuera.em](https://gitlab.com/EvilMask/emuera.em)（Emuera.EM / EE 系，era 解释器，WinForms；本副本基于 EEv56）抽取出的**跨平台无头 era 语法分析核心**，外加一个**纯 C# 的 MCP 服务器**。
 给定一个 era 项目（含 `csv/` 与 `erb/`），运行加载 + 解析管线，返回结构化诊断（消息 / 文件 / 行号 / 等级），用于快速检查语法/结构/标识符/参数错误。
 
 - 🐧 **跨平台**：在 Linux / Windows 上运行（无需 WinForms / GUI）
@@ -8,7 +8,7 @@
 - 🖥️ **CLI**：`era-analyze <项目根> [目标]`
 - ✅ **真实验证**：在大型项目 [eratohoK](https://github.com/wamekukyouzin/eratohoK)（2308 ERB）上分析**零误报、零崩溃**
 
-> 本仓是 Emuera（EEv56）源码的衍生副本；分析核心与 MCP 服务器为新增部分，原 WinForms 程序保持可在 Windows 构建。
+> 本仓是 [EvilMask/emuera.em](https://gitlab.com/EvilMask/emuera.em)（EEv56）源码的衍生副本；分析核心与 MCP 服务器为新增部分，原 WinForms 程序保持可在 Windows 构建。
 
 ## 安装
 
@@ -106,4 +106,4 @@ diagnostics : 1
 
 ## 许可
 
-Emuera 部分遵循其原始许可（见 [`Readme/License/`](Readme/License/)）。
+上游 [EvilMask/emuera.em](https://gitlab.com/EvilMask/emuera.em)（及更早的 Emuera）部分遵循其原始许可（见 [`Readme/License/`](Readme/License/)）。
