@@ -14,3 +14,6 @@ artifacts/
 
 *.diff
 *.patch
+
+# 本地协作约定，不纳入版本控制
+CLAUDE.md
